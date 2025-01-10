@@ -9,7 +9,7 @@ from io import BytesIO
 app = Flask(__name__)
 
 # 資料庫設定
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost:5432/yourdatabase'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://appdata_b97z_user:SOxfD2bGB4370oGAawtiz6l1Bo3rzzfo@5432/appdata_b97z'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key'
 
@@ -146,4 +146,4 @@ def delete_item(item_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=10000)
