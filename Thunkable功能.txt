@@ -1,0 +1,35 @@
+APP:
+頁面1-index首頁
+	功能1:進入衣櫃頁面(查詢所有物品)
+	功能2:掃描QR code(找特定物品)
+	功能3:拍照建檔(QR code API)
+
+頁面2-wardrobe衣櫃頁面(全圖)
+	功能1:選擇櫃位查詢(All、A櫃、B櫃、C櫃)
+	功能2:櫃內篩選類別
+	功能3:點選照片→進入商品詳細頁面
+	
+頁面3-add建檔頁面→全資料上資料庫
+	功能1:
+		clothes_photo_path01:1張照片
+		wardrobe_id:櫃位(選擇A、B、C櫃)
+		name:名稱(自行輸入)
+		category:類別(衣服、褲子、外套、裙子、連身、其他)
+		color:顏色(白、黑、灰、紅、橙、黃、綠、藍、紫、金、銀、棕、其他)
+		description:描述(自行輸入)
+	功能2:儲存資料到後端
+	功能3:進到QR code頁面
+	功能4:QR 下載鈕
+
+頁面4-data詳細頁面
+	功能1:顯示資料如下
+		clothes_photo_path01:照片
+		wardrobe_id:櫃位
+		name:名稱
+		category:類別
+		color:顏色
+		description:描述
+	功能2:修改上述內容
+	功能3:刪除資料
+	
+	
