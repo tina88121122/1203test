@@ -24,19 +24,27 @@ db = SQLAlchemy(app)
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
-# 定義資料庫模型
+# 定義 ENUM 類型
+category_types = ENUM('衣服', '褲子', '裙子', '連身', '其他', name='category_types')
+color_types = ENUM('白', '黑', '灰', '紅', '橙', '黃', '綠', '藍', '紫', '金', '銀', '棕', '其他', name='color_types')
+wardrobe_types = ENUM('A櫃', 'B櫃', 'C櫃', name='wardrobe_types')
+
+# 定義資料庫 Item 模型
 class Item(db.Model):
     __tablename__ = 'items'
     
     id = db.Column(db.Integer, primary_key=True)
-    clothes_photo_path = db.Column(db.String(255), nullable=False)
-    wardrobe = db.Column(db.String(10), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(20), nullable=False)
-    color = db.Column(db.String(20), nullable=False)
+    category = db.Column(category_types, nullable=False)
+    color = db.Column(color_types, nullable=False)
     description = db.Column(db.Text, nullable=True)
-    qrcode_path = db.Column(db.String(255), nullable=True)
+    wardrobe = db.Column(wardrobe_types, nullable=False)
+    qrcode_path = db.Column(db.String(255))
+    clothes_photo_path = db.Column(db.String(255))
 
+
+    
+   
 # 顯示衣櫃資料
 @app.route('/wardrobe', methods=['GET'])
 def get_wardrobe():
