@@ -25,8 +25,8 @@ photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
 # 定義 ENUM 類型
-category_types = ENUM('衣服', '褲子', '裙子', '連身', '其他', name='category_types')
-color_types = ENUM('白', '黑', '灰', '紅', '橙', '黃', '綠', '藍', '紫', '金', '銀', '棕', '其他', name='color_types')
+new_category_type = ENUM('上身', '下身','連身', '其他', name='new_category_type')
+new_color_type = ENUM('暖色','冷色','黑白','其他', name='new_color_type')
 wardrobe_types = ENUM('A櫃', 'B櫃', 'C櫃', name='wardrobe_types')
 
 # 定義資料庫 Item 模型
@@ -35,8 +35,8 @@ class Item(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    category = db.Column(category_types, nullable=False)
-    color = db.Column(color_types, nullable=False)
+    category = db.Column(new_category_type, nullable=False)
+    color = db.Column(new_color_type, nullable=False)
     description = db.Column(db.Text, nullable=True)
     wardrobe = db.Column(wardrobe_types, nullable=False)
     qrcode_path = db.Column(db.String(255))
