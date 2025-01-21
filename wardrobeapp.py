@@ -33,6 +33,7 @@ class Item(db.Model):
     description = db.Column(db.Text)
     wardrobe = db.Column(db.Enum('A', 'B', 'C'), nullable=False)
     clothes_photo_path = db.Column(db.String(255))
+    is_deleted=db.Column(db.Boolean,default=False)
 
    
 
@@ -47,12 +48,15 @@ def index():
 def items():
     wardrobe_id = request.args.get('wardrobe_id', 'All')  # 默認顯示所有
     category = request.args.get('category', None)
+    show_deleted = request.args.get('show_deleted', 'False') == 'True'  # 判斷是否顯示已刪除的物品
 
     query = Item.query
     if wardrobe_id != 'All':
         query = query.filter(Item.wardrobe == wardrobe_id)
     if category:
         query = query.filter(Item.category == category)
+    if not show_deleted:
+        query = query.filter(Item.is_deleted == False)  # 只顯示未刪除的物品
     
 
     items = query.all()
@@ -131,9 +135,9 @@ def delete_item(item_id):
     record=Item.query.get_or_404(item_id)
     if record:
         try:
-            db.session.delete(record)
+            record.is_deleted=True
             db.session.commit()
-            flash('已刪除','success')
+            flash('物品已移至回收箱','success')
         except Exception as e:
             db.session.rollback()
             flash(f'刪除失敗:{str(e)}','danger')
@@ -141,8 +145,40 @@ def delete_item(item_id):
         flash('找不到指定紀錄','warning')
     return redirect(url_for('items'))
 
+@app.route('/trash',methods=['GET'])
+def trash():
+    items=Item.query.filter_by(is_deleted=True).all()
+    return render_template('trash.html',items=items)
 
+@app.route('/restore_item/<int:item_id>',methods=['POST'])
+def restore_item(item_id):
+    record=Item.query.get_or_404(item_id)
+    if record:
+        try:
+            record.is_deleted=False
+            db.session.commit()
+            flash('物品以還原','success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'還原失敗:{str(e)}','danger')
+    else:
+        flash('找不到指定紀錄','warning')
+    return redirect(url_for('trash'))
 
+@app.route('/realdelete_item/<int:item_id>',methods=['POST'])
+def realdelete_item(item_id):
+    record=Item.query.get_or_404(item_id)
+    if record:
+        try:
+            db.session.delete(record)
+            db.session.commit()
+            flash('已永久刪除','success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'刪除失敗:{str(e)}','danger')
+    else:
+        flash('找不到指定紀錄','warning')
+    return redirect(url_for('items'))
 
 if __name__=='__main__':
     app.run(debug=True)
