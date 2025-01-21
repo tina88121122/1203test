@@ -48,6 +48,6 @@
     <button type="submit" class="btn btn-success">更新物品資料</button>
 </form>
 <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST" style="display:inline;">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('確定要刪除此記錄嗎？')">刪除</button>
+        <button type="submit" class="btn btn-danger" onclick="return confirm('確定要回收嗎？')">舊衣回收</button>
 </form>
 {% endblock %}
