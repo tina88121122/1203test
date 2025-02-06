@@ -10,7 +10,7 @@ from sqlalchemy.dialects.postgresql import ENUM
 app = Flask(__name__)
 
 # 資料庫設定
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://appdata_b97z_user:SOxfD2bGB4370oGAawtiz6l1Bo3rzzfo@5432/appdata_b97z'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:@5432/'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # 初始化資料庫
